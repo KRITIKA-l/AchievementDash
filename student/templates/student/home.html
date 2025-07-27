@@ -12,8 +12,7 @@
     {% include 'student/navbar.html' %}
 
         <div class="container-fluid d-flex justify-content-center align-items-center mt-2">
-            <div class="p-3 rounded-3 shadow-sm text-center"
-                style="width: 80%;background: linear-gradient(135deg, rgba(93,63,211,0.1), rgba(93,63,211,0.25));">
+            <div class="p-3 rounded-3 shadow-sm text-center" style="width: 80%;background: linear-gradient(135deg, rgba(93,63,211,0.1), rgba(93,63,211,0.25));">
                 <i class="bi bi-lightbulb-fill" style="color: darkslateblue; font-size: 1.5rem;"></i>
                 <h5 id="quote" class="mt-2 mb-0" style="color: darkslateblue; font-weight: 600; transition: opacity 0.5s ease;">
                     "Showcase your skills and inspire the world."
@@ -22,7 +21,8 @@
         </div>
     {% include 'student/footer.html' %}
     <script>
-        const quotes = [
+        const quotes = 
+        [
             "Every skill you master doubles your value.",
             "Your achievements are your best resume.",
             "Keep learning, keep growing.",
@@ -31,12 +31,14 @@
         let index = 0;
         const quoteEl = document.getElementById('quote');
 
-        setInterval(() => {
+        setInterval(() => 
+        {
             index = (index + 1) % quotes.length;
-            quoteEl.style.opacity = 0;      // fade out
-            setTimeout(() => {
+            quoteEl.style.opacity = 0;      
+            setTimeout(() => 
+            {
                 quoteEl.textContent = quotes[index];
-                quoteEl.style.opacity = 1;  // fade in
+                quoteEl.style.opacity = 1;  
             }, 500);
         }, 5000);  // change every 5 seconds
     </script>
