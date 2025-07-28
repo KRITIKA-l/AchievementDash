@@ -26,6 +26,9 @@ urlpatterns = [
     path('dashboard',views.dashboard,name='dashboard'),
     path('addachievement',views.addachievement,name='addachievement'),
     path('profile',views.profile,name='profile'),
+    path('loginuser/',views.loginuser,name='loginuser'),
+    path('signupuser/',views.signupuser,name='signupuser'),
+    path('logoutuser/',views.logoutuser,name='logoutuser'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

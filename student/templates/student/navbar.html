@@ -125,6 +125,9 @@
             <ul class="list-unstyled">
                 <li><a href="{% url 'dashboard' %}" class="text-white text-decoration-none" id="home">Dashboard</a></li>
             </ul>
+            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
+                Login
+            </button>
         </div>
         <!-- search section -->
         <form class="search-bar" role="search" method="post" action="">
@@ -138,6 +141,79 @@
                 <button class="btn text-white" id="infobtn" onclick="infobtn()">
                     <i class="bi bi-person-circle fs-5"></i>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <form method="POST" action="{% url 'loginuser' %}">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <!-- credentials -->
+                        <input placeholder="Enter Username" class="form-control mt-2"  type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="username">
+                        <input placeholder="Enter Password" class="form-control mt-2" type="password" name="password" autocomplete="current-password" required=""  id="password">
+                        <!-- signin button -->
+                        <button type="submit" class="btn btn-primary w-100 mb-2 mt-4"  id="btn1">Sign In</button>
+                        <p class="mt-2">
+                            <!-- switch to signup -->
+                            Don't have an account? 
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signupModal">
+                                Signup
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Signup</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <form method="POST" action="{% url 'signupuser' %}" class="p-3">
+                    {% csrf_token %}
+                    <!-- username -->
+                    <input placeholder="Enter Username" class="form-control mt-4 mb-2"  type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required="" aria-describedby="id_username_helptext" id="username">
+                    <!-- password -->
+                    <div>
+                        <label for="id_password1">Password Rules:</label>
+                        <div class="helptext text-start" id="id_password1_helptext" style="max-height: 50px; overflow-y: auto; font-size: 0.85rem;">
+                            <ul>
+                                <li>Your password can’t be too similar to your other personal information.</li>
+                                <li>Your password must contain at least 8 characters.</li>
+                                <li>Your password can’t be a commonly used password.</li>
+                                <li>Your password can’t be entirely numeric.</li>
+                            </ul>
+                        </div>
+                        <input placeholder="Enter Password" class="form-control mt-3 mb-2" type="password" name="password1" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1">
+                    </div>
+                    <!-- confirm password -->
+                    <div>
+                        <label for="id_password2">Password confirmation:</label>
+                        <div class="helptext text-start" id="id_password2_helptext">Enter the same password as before, for verification.</div>
+                        <input placeholder="Confirm Password" class="form-control mt-2" type="password" name="password2" autocomplete="new-password" required="" aria-describedby="id_password2_helptext" id="id_password2">
+                    </div>
+                    <!-- signup button -->
+                    <button type="submit" class="btn btn-primary w-100 mb-2 mt-2"  id="btn1">Sign Up</button>
+                    <!-- switch to signin -->
+                    <p class="mt-2">
+                        Already have an account? 
+                        <a class="btn btn-dark" id="btn2" href="">Sign In</a>
+                    </p>
+                </form>
             </div>
         </div>
     </div>
