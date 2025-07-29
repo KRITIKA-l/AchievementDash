@@ -63,3 +63,34 @@ def logoutuser(request):
 def profile(request):
     return render(request, 'student/profile.html')
 
+@login_required
+def edit_profile(request):
+    profile = request.user.userprofile
+    if request.method == "POST":
+        # Update only if a value is provided
+        bio = request.POST.get('bio', '').strip()
+        location = request.POST.get('location', '').strip()
+        linkedin = request.POST.get('linkedin_url', '').strip()
+        github = request.POST.get('github_url', '').strip()
+        website = request.POST.get('personal_website', '').strip()
+
+        if bio != "":
+            profile.bio = bio
+        if location != "":
+            profile.location = location
+        if linkedin != "":
+            profile.linkedin_url = linkedin
+        if github != "":
+            profile.github_url = github
+        if website != "":
+            profile.personal_website = website
+
+        if 'profile_image' in request.FILES:
+            profile.profile_image = request.FILES['profile_image']
+
+        profile.save()
+        messages.success(request, "Profile updated successfully!")
+        return redirect('profile')
+
+    return render(request, 'student/editprofile.html', {'profile': profile})
+

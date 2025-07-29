@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ user.username }}'s Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
     {% include 'student/navbar.html' %}
+    {% if messages %}
+        <div id="alert-box" class="alert alert-info text-center" style="position:fixed; top:70px; width:100%; z-index:1050;">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="container py-5">
         <div class="card mx-auto shadow" style="max-width: 500px;">
             <div class="card-body text-center">
@@ -62,9 +68,17 @@
                         <span class="text-secondary d-block">No Website</span>
                     {% endif %}
                 </div>
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-2">Edit Profile</a>
             </div>
         </div>
     </div>
     {% include 'student/footer.html' %}
+    <script>
+        setTimeout(() =>
+        {
+            document.getElementById('alert-box').style.display = 'none';
+        }, 3000); 
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>
 </html>
