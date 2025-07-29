@@ -12,8 +12,7 @@
 <body>
     {% include 'student/navbar.html' %}
     {% if messages %}
-    <div id="alert-box" class="alert alert-info text-center" 
-        style="position:fixed; top:70px; width:100%; z-index:1050;">
+    <div id="alert-box" class="alert alert-info text-center" style="position:fixed; top:70px; width:100%; z-index:1050;">
         {% for message in messages %}
             {{ message }}
         {% endfor %}

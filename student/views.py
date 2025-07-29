@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import UserProfile,User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
     return render(request,'student/home.html')
@@ -44,13 +45,21 @@ def signupuser(request):
             else:
                 user=User.objects.create_user(username=a,password=b)
                 user.save()
+                UserProfile.objects.create(user=user)
                 login(request,user)
+                messages.success(request, 'Signup Successful!')
                 return (redirect('home'))
         else:
             messages.error(request, 'Password Mismatched!')
             return redirect('home') 
         
+
 def logoutuser(request):
     if request.method=='GET':
         logout(request)
         return(redirect('home'))
+    
+@login_required
+def profile(request):
+    return render(request, 'student/profile.html')
+
