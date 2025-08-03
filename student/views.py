@@ -3,6 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from .models import UserProfile,User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import CustomSignupForm
+from .models import UserProfile
+import datetime
+
 # Create your views here.
 def home(request):
     return render(request,'student/home.html')
@@ -18,41 +22,40 @@ def profile(request):
 
 def loginuser(request):
     if request.method=='GET':
-        return render(request,'student/home.html')
+        return render(request,'student/loginuser.html')
     else:
         a=request.POST.get('username')
         b=request.POST.get('password')
         user=authenticate(request,username=a,password=b)
         if user is None:
-            messages.error(request, 'Invalid username or password!')
-            return redirect('home') 
+            return render(request,'student/loginuser.html',{'error':'Invalid Credentials!'})
         else:
             login(request,user)
-            messages.success(request, f'Welcome {a}!')
             return (redirect('home'))
-        
+
+
 def signupuser(request):
     if request.method=='GET':
-        return render(request,'student/home.html')
+        return render(request,'student/signupuser.html')
     else:
         a=request.POST.get('username')
         b=request.POST.get('password1')
         c=request.POST.get('password2')
+        dob = request.POST.get('date_of_birth')
+        e = request.POST.get('location')
+        f = request.POST.get('bio')
+        date_obj = datetime.datetime.strptime(dob, "%Y-%m-%d").date() if dob else None
         if(b==c):
             if(User.objects.filter(username=a).exists()):
-                messages.error(request, 'User Already Exist!')
-                return redirect('home') 
+                return render(request,'student/signupuser.html',{'error':'User Already Exists!'})
             else:
                 user=User.objects.create_user(username=a,password=b)
                 user.save()
-                UserProfile.objects.create(user=user)
+                UserProfile.objects.create(user=user, location=e,bio=f, date_of_birth=date_obj)
                 login(request,user)
-                messages.success(request, 'Signup Successful!')
                 return (redirect('home'))
         else:
-            messages.error(request, 'Password Mismatched!')
-            return redirect('home') 
-        
+            return render(request,'student/signupuser.html',{'error':'Password Mismatched!'})
 
 def logoutuser(request):
     if request.method=='GET':
