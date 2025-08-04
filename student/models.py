@@ -14,6 +14,7 @@ class UserProfile(models.Model):
     github_url = models.URLField(blank=True, null=True)
     personal_website = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_public = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.user.username}'s Profile"

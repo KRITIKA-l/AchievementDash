@@ -15,43 +15,60 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
+            <!-- Bio -->
             <div class="mb-3">
                 <label for="bio" class="form-label">Bio</label>
-                <textarea class="form-control" id="bio" name="bio">{{ profile.bio }}</textarea>
+                <textarea class="form-control" id="bio" name="bio" rows="3">{{ profile.bio }}</textarea>
             </div>
 
+            <!-- Location -->
             <div class="mb-3">
                 <label for="location" class="form-label">Location</label>
                 <input type="text" class="form-control" id="location" name="location" value="{{ profile.location }}">
             </div>
 
+            <!-- Date of Birth -->
+            <div class="mb-3">
+                <label for="date_of_birth" class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" 
+                       value="{{ profile.date_of_birth|date:'Y-m-d' }}">
+            </div>
+
+            <!-- LinkedIn URL -->
             <div class="mb-3">
                 <label for="linkedin_url" class="form-label">LinkedIn URL</label>
                 <input type="text" class="form-control" id="linkedin_url" name="linkedin_url" value="{{ profile.linkedin_url }}">
             </div>
 
+            <!-- GitHub URL -->
             <div class="mb-3">
                 <label for="github_url" class="form-label">GitHub URL</label>
                 <input type="text" class="form-control" id="github_url" name="github_url" value="{{ profile.github_url }}">
             </div>
 
+            <!-- Personal Website -->
             <div class="mb-3">
                 <label for="personal_website" class="form-label">Personal Website</label>
                 <input type="text" class="form-control" id="personal_website" name="personal_website" value="{{ profile.personal_website }}">
             </div>
 
+            <!-- Profile Image -->
             <div class="mb-3">
                 <label for="profile_image" class="form-label">Profile Image</label>
                 <input type="file" class="form-control" id="profile_image" name="profile_image">
+                {% if profile.profile_image %}
+                    <small class="text-muted d-block mt-1">Current Image:</small>
+                    <img src="{{ profile.profile_image.url }}" alt="Profile Image" width="100" class="rounded mt-1">
+                {% endif %}
             </div>
 
+            <!-- Buttons -->
             <button type="submit" class="btn btn-success">Save Changes</button>
             <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 
-    
     {% include 'student/footer.html' %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -5,7 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ user.username }}'s Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #ece9e6, #ffffff);
+        }
+        .profile-card {
+            border-radius: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: #fff;
+            padding: 30px;
+        }
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .profile-card h3 {
+            font-weight: 600;
+        }
+        .profile-card .profile-image {
+            border: 4px solid #f1f1f1;
+        }
+        .btn-link-custom {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin: 3px;
+        }
+    </style>
 </head>
 <body>
     {% include 'student/navbar.html' %}
@@ -17,59 +46,76 @@
         </div>
     {% endif %}
     <div class="container py-5">
-        <div class="card mx-auto shadow" style="max-width: 500px;">
-            <div class="card-body text-center">
-                <!-- Profile Image -->
-                {% if user.userprofile.profile_image %}
-                    <img src="{{ user.userprofile.profile_image.url }}" class="rounded-circle mb-3" width="120" height="120" alt="Profile Image">
+        <div class="profile-card mx-auto shadow text-center" style="max-width: 500px;">
+            <!-- Profile Image -->
+            {% if user.userprofile.profile_image %}
+                <img src="{{ user.userprofile.profile_image.url }}" 
+                     class="rounded-circle mb-3 profile-image" width="120" height="120" alt="Profile Image">
+            {% else %}
+                <img src="{% static 'student/img2.jpg' %}" 
+                     class="rounded-circle mb-3 profile-image" width="120" height="120" alt="Default Profile">
+            {% endif %}
+
+            <!-- Username -->
+            <h3>{{ user.username }}</h3>
+
+            <!-- Bio -->
+            <p class="text-muted">
+                {% if user.userprofile.bio %}
+                    {{ user.userprofile.bio }}
                 {% else %}
-                    <img src="{% static 'student/img2.jpg' %}" class="rounded-circle mb-3" width="120" height="120"  alt="Default Profile">
+                    No bio added yet.
                 {% endif %}
+            </p>
 
-                <!-- Username -->
-                <h3 class="card-title">{{ user.username }}</h3>
+            <!-- Date of Birth -->
+            <p>
+                <i class="bi bi-calendar-event"></i>
+                {% if user.userprofile.date_of_birth %}
+                    {{ user.userprofile.date_of_birth }}
+                {% else %}
+                    DOB not specified
+                {% endif %}
+            </p>
 
-                <!-- Bio -->
-                <p class="text-muted">
-                    {% if user.userprofile.bio %}
-                        {{ user.userprofile.bio }}
-                    {% else %}
-                        No bio added yet.
-                    {% endif %}
-                </p>
+            <!-- Location -->
+            <p>
+                <i class="bi bi-geo-alt"></i>
+                {% if user.userprofile.location %}
+                    {{ user.userprofile.location }}
+                {% else %}
+                    Location not specified
+                {% endif %}
+            </p>
 
-                <!-- Location -->
-                <p>
-                    <i class="bi bi-geo-alt"></i>
-                    {% if user.userprofile.location %}
-                        {{ user.userprofile.location }}
-                    {% else %}
-                        Location not specified
-                    {% endif %}
-                </p>
+            {% if user.userprofile.linkedin_url and user.userprofile.linkedin_url != 'None' %}
+                <a href="{{ user.userprofile.linkedin_url }}" target="_blank" 
+                class="btn btn-outline-primary btn-sm btn-link-custom">
+                    <i class="bi bi-linkedin"></i> LinkedIn
+                </a>
+            {% else %}
+                <span class="text-secondary d-block mb-2">No LinkedIn Added</span>
+            {% endif %}
 
-                <!-- Links -->
-                <div class="mt-3">
-                    {% if user.userprofile.linkedin_url %}
-                        <a href="{{ user.userprofile.linkedin_url }}" target="_blank" class="btn btn-outline-primary btn-sm">LinkedIn</a>
-                    {% else %}
-                        <span class="text-secondary d-block mb-2">No LinkedIn</span>
-                    {% endif %}
+            {% if user.userprofile.github_url and user.userprofile.github_url != 'None' %}
+                <a href="{{ user.userprofile.github_url }}" target="_blank" 
+                class="btn btn-outline-dark btn-sm btn-link-custom">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+            {% else %}
+                <span class="text-secondary d-block mb-2">No GitHub Added</span>
+            {% endif %}
 
-                    {% if user.userprofile.github_url %}
-                        <a href="{{ user.userprofile.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">GitHub</a>
-                    {% else %}
-                        <span class="text-secondary d-block mb-2">No GitHub</span>
-                    {% endif %}
+            {% if user.userprofile.personal_website and user.userprofile.personal_website != 'None' %}
+                <a href="{{ user.userprofile.personal_website }}" target="_blank" 
+                class="btn btn-outline-success btn-sm btn-link-custom">
+                    <i class="bi bi-globe"></i> Website
+                </a>
+            {% else %}
+                <span class="text-secondary d-block">No Website Added</span>
+            {% endif %}
 
-                    {% if user.userprofile.personal_website %}
-                        <a href="{{ user.userprofile.personal_website }}" target="_blank" class="btn btn-outline-success btn-sm">Website</a>
-                    {% else %}
-                        <span class="text-secondary d-block">No Website</span>
-                    {% endif %}
-                </div>
-                <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-2">Edit Profile</a>
-            </div>
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-3">Edit Profile</a>
         </div>
     </div>
     {% include 'student/footer.html' %}
@@ -79,6 +125,7 @@
             document.getElementById('alert-box').style.display = 'none';
         }, 3000); 
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

@@ -88,9 +88,7 @@
 
                 <!-- Username -->
                  <label for="dob">Username:</label>
-                <input placeholder="Enter Username" class="form-control mb-2" 
-                       type="text" name="username" maxlength="150" autocapitalize="none" 
-                       autocomplete="username" autofocus required>
+                <input placeholder="Enter Username" class="form-control mb-2" type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required>
 
 
                 <label for="dob">Date of Birth:</label>
@@ -109,21 +107,30 @@
                         <li>Your password can’t be entirely numeric.</li>
                     </ul>
                 </div>
-                <input placeholder="Enter Password" class="form-control mb-3" 
-                       type="password" name="password1" autocomplete="new-password" required>
+                <input placeholder="Enter Password" class="form-control mb-3" type="password" name="password1" autocomplete="new-password" required>
 
                 <!-- Confirm Password -->
                 <label>Password confirmation:</label>
                 <div class="helptext-scroll text-start mb-2">
                     Enter the same password as before, for verification.
                 </div>
-                <input placeholder="Confirm Password" class="form-control mb-3" 
-                       type="password" name="password2" autocomplete="new-password" required>
+                <input placeholder="Confirm Password" class="form-control mb-3" type="password" name="password2" autocomplete="new-password" required>
 
+
+                <!-- GitHub URL -->
+                <label for="github_url">GitHub URL:</label>
+                <input type="url" name="github_url" id="github_url" placeholder="https://github.com/username" class="form-control mb-3">
+
+                <!-- LinkedIn URL -->
+                <label for="linkedin_url">LinkedIn URL:</label>
+                <input type="url" name="linkedin_url" id="linkedin_url" placeholder="https://www.linkedin.com/in/username/" class="form-control mb-3">
+
+                <!-- Personal Website -->
+                <label for="personal_website">Website:</label>
+                <input type="url" name="personal_website" id="personal_website" placeholder="https://yourwebsite.com" class="form-control mb-3">
 
                 <label for="bio">Bio:</label>
-                <textarea name="bio" id="bio" class="form-control mb-3" rows="3"
-                        placeholder="Tell us about yourself"></textarea>
+                <textarea name="bio" id="bio" class="form-control mb-3" rows="3" placeholder="Tell us about yourself"></textarea>
                 <!-- Submit Button -->
                 <button type="submit" class="btn btn-primary w-100 mb-2 mt-2">Sign Up</button>
 

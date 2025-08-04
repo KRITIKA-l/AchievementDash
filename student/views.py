@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login, logout
 from .models import UserProfile,User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import CustomSignupForm
 from .models import UserProfile
 import datetime
 
@@ -70,24 +69,29 @@ def profile(request):
 def edit_profile(request):
     profile = request.user.userprofile
     if request.method == "POST":
-        # Update only if a value is provided
+        # Fetch values
         bio = request.POST.get('bio', '').strip()
         location = request.POST.get('location', '').strip()
+        dob = request.POST.get('date_of_birth', '').strip()
         linkedin = request.POST.get('linkedin_url', '').strip()
         github = request.POST.get('github_url', '').strip()
         website = request.POST.get('personal_website', '').strip()
 
-        if bio != "":
+        # Update only if a value is provided
+        if bio:
             profile.bio = bio
-        if location != "":
+        if location:
             profile.location = location
-        if linkedin != "":
+        if dob:  # Validate empty string
+            profile.date_of_birth = dob
+        if linkedin:
             profile.linkedin_url = linkedin
-        if github != "":
+        if github:
             profile.github_url = github
-        if website != "":
+        if website:
             profile.personal_website = website
 
+        # Profile image
         if 'profile_image' in request.FILES:
             profile.profile_image = request.FILES['profile_image']
 
