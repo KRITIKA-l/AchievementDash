@@ -76,7 +76,7 @@ def edit_profile(request):
         linkedin = request.POST.get('linkedin_url', '').strip()
         github = request.POST.get('github_url', '').strip()
         website = request.POST.get('personal_website', '').strip()
-
+        profile.is_public = request.POST.get('is_public') == 'True'
         # Update only if a value is provided
         if bio:
             profile.bio = bio

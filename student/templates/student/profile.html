@@ -45,79 +45,83 @@
             {% endfor %}
         </div>
     {% endif %}
-    <div class="container py-5">
-        <div class="profile-card mx-auto shadow text-center" style="max-width: 500px;">
-            <!-- Profile Image -->
-            {% if user.userprofile.profile_image %}
-                <img src="{{ user.userprofile.profile_image.url }}" 
-                     class="rounded-circle mb-3 profile-image" width="120" height="120" alt="Profile Image">
-            {% else %}
-                <img src="{% static 'student/img2.jpg' %}" 
-                     class="rounded-circle mb-3 profile-image" width="120" height="120" alt="Default Profile">
-            {% endif %}
-
-            <!-- Username -->
-            <h3>{{ user.username }}</h3>
-
-            <!-- Bio -->
-            <p class="text-muted">
-                {% if user.userprofile.bio %}
-                    {{ user.userprofile.bio }}
+    {% if user.userprofile.is_public or request.user == user %}
+        <div class="container py-5">
+            <div class="profile-card mx-auto shadow text-center" style="max-width: 500px;">
+                <!-- Profile Image -->
+                {% if user.userprofile.profile_image %}
+                    <img src="{{ user.userprofile.profile_image.url }}" 
+                        class="rounded-circle mb-3 profile-image" width="120" height="120" alt="Profile Image">
                 {% else %}
-                    No bio added yet.
+                    <img src="{% static 'student/img2.jpg' %}" 
+                        class="rounded-circle mb-3 profile-image" width="120" height="120" alt="Default Profile">
                 {% endif %}
-            </p>
 
-            <!-- Date of Birth -->
-            <p>
-                <i class="bi bi-calendar-event"></i>
-                {% if user.userprofile.date_of_birth %}
-                    {{ user.userprofile.date_of_birth }}
+                <!-- Username -->
+                <h3>{{ user.username }}</h3>
+
+                <!-- Bio -->
+                <p class="text-muted">
+                    {% if user.userprofile.bio %}
+                        {{ user.userprofile.bio }}
+                    {% else %}
+                        No bio added yet.
+                    {% endif %}
+                </p>
+
+                <!-- Date of Birth -->
+                <p>
+                    <i class="bi bi-calendar-event"></i>
+                    {% if user.userprofile.date_of_birth %}
+                        {{ user.userprofile.date_of_birth }}
+                    {% else %}
+                        DOB not specified
+                    {% endif %}
+                </p>
+
+                <!-- Location -->
+                <p>
+                    <i class="bi bi-geo-alt"></i>
+                    {% if user.userprofile.location %}
+                        {{ user.userprofile.location }}
+                    {% else %}
+                        Location not specified
+                    {% endif %}
+                </p>
+
+                {% if user.userprofile.linkedin_url and user.userprofile.linkedin_url != 'None' %}
+                    <a href="{{ user.userprofile.linkedin_url }}" target="_blank" 
+                    class="btn btn-outline-primary btn-sm btn-link-custom">
+                        <i class="bi bi-linkedin"></i> LinkedIn
+                    </a>
                 {% else %}
-                    DOB not specified
+                    <span class="text-secondary d-block mb-2">No LinkedIn Added</span>
                 {% endif %}
-            </p>
 
-            <!-- Location -->
-            <p>
-                <i class="bi bi-geo-alt"></i>
-                {% if user.userprofile.location %}
-                    {{ user.userprofile.location }}
+                {% if user.userprofile.github_url and user.userprofile.github_url != 'None' %}
+                    <a href="{{ user.userprofile.github_url }}" target="_blank" 
+                    class="btn btn-outline-dark btn-sm btn-link-custom">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
                 {% else %}
-                    Location not specified
+                    <span class="text-secondary d-block mb-2">No GitHub Added</span>
                 {% endif %}
-            </p>
 
-            {% if user.userprofile.linkedin_url and user.userprofile.linkedin_url != 'None' %}
-                <a href="{{ user.userprofile.linkedin_url }}" target="_blank" 
-                class="btn btn-outline-primary btn-sm btn-link-custom">
-                    <i class="bi bi-linkedin"></i> LinkedIn
-                </a>
-            {% else %}
-                <span class="text-secondary d-block mb-2">No LinkedIn Added</span>
-            {% endif %}
+                {% if user.userprofile.personal_website and user.userprofile.personal_website != 'None' %}
+                    <a href="{{ user.userprofile.personal_website }}" target="_blank" 
+                    class="btn btn-outline-success btn-sm btn-link-custom">
+                        <i class="bi bi-globe"></i> Website
+                    </a>
+                {% else %}
+                    <span class="text-secondary d-block">No Website Added</span>
+                {% endif %}
 
-            {% if user.userprofile.github_url and user.userprofile.github_url != 'None' %}
-                <a href="{{ user.userprofile.github_url }}" target="_blank" 
-                class="btn btn-outline-dark btn-sm btn-link-custom">
-                    <i class="bi bi-github"></i> GitHub
-                </a>
-            {% else %}
-                <span class="text-secondary d-block mb-2">No GitHub Added</span>
-            {% endif %}
-
-            {% if user.userprofile.personal_website and user.userprofile.personal_website != 'None' %}
-                <a href="{{ user.userprofile.personal_website }}" target="_blank" 
-                class="btn btn-outline-success btn-sm btn-link-custom">
-                    <i class="bi bi-globe"></i> Website
-                </a>
-            {% else %}
-                <span class="text-secondary d-block">No Website Added</span>
-            {% endif %}
-
-            <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-3">Edit Profile</a>
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-3">Edit Profile</a>
+            </div>
         </div>
-    </div>
+    {% else %}
+        <div class="alert alert-warning text-center">This profile is private.</div>
+    {% endif %}
     {% include 'student/footer.html' %}
     <script>
         setTimeout(() =>
