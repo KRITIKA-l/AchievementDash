@@ -69,9 +69,14 @@
                 {% endif %}
             </div>
 
+            <select id="is_public" name="is_public" class="form-select">
+                <option value="True" {% if profile.is_public %}selected{% endif %}>Public</option>
+                <option value="False" {% if not profile.is_public %}selected{% endif %}>Private</option>
+            </select>
+
             <!-- Buttons -->
-            <button type="submit" class="btn btn-success">Save Changes</button>
-            <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-success mt-2">Save Changes</button>
+            <a href="{% url 'profile' %}" class="btn btn-secondary mt-2">Cancel</a>
         </form>
     </div>
 

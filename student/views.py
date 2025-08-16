@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from .models import UserProfile,User
 from django.contrib import messages
@@ -62,8 +62,25 @@ def logoutuser(request):
         return(redirect('home'))
     
 @login_required
-def profile(request):
-    return render(request, 'student/profile.html')
+def my_profile(request):
+    profile = request.user.userprofile
+    return render(request, 'student/profile.html', {'profile_user': request.user, 'profile': profile})
+
+@login_required
+def profile_view(request, username=None):
+    if username:
+        user_obj = get_object_or_404(User, username=username)
+    else:
+        user_obj = request.user  
+
+    profile = user_obj.userprofile  
+
+    # Render the SAME template, it handles private vs public
+    context = {
+        'profile_user': user_obj,
+        'profile': profile
+    }
+    return render(request, 'student/profile.html', context)
 
 @login_required
 def edit_profile(request):
@@ -100,4 +117,5 @@ def edit_profile(request):
         return redirect('profile')
 
     return render(request, 'student/editprofile.html', {'profile': profile})
+
 
