@@ -32,6 +32,10 @@ urlpatterns = [
     path('profile/', views.my_profile, name='my_profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('profile/<str:username>/', views.profile_view, name='profile_view'),
+
+    path("opportunities/", views.opportunity_list, name="opportunity_list"),
+    path('<int:pk>/', views.opportunity_detail, name='opportunity_detail'),
+    path('opportunity/<int:pk>/apply/', views.apply_for_opportunity, name='apply_for_opportunity'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

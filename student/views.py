@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import UserProfile,User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile
+from .models import UserProfile,Opportunity,OpportunityApplication
 import datetime
 
 # Create your views here.
@@ -119,3 +119,44 @@ def edit_profile(request):
     return render(request, 'student/editprofile.html', {'profile': profile})
 
 
+def opportunity_list(request):
+    opportunities = Opportunity.objects.all().order_by('-created_at')
+    return render(request, 'student/opplist.html', {'opportunities': opportunities})
+
+def opportunity_detail(request, pk):
+    opportunity = get_object_or_404(Opportunity, pk=pk)
+
+    already_applied = False
+    if request.user.is_authenticated:
+        already_applied = OpportunityApplication.objects.filter(
+            opportunity=opportunity,
+            student=request.user
+        ).exists()
+
+    return render(request, 'student/oppdetail.html', {
+        'opportunity': opportunity,
+        'already_applied': already_applied
+    })
+
+@login_required
+def apply_for_opportunity(request, pk):
+    opportunity = get_object_or_404(Opportunity, pk=pk)
+
+    # prevent duplicate application
+    existing_application = OpportunityApplication.objects.filter(opportunity=opportunity, student=request.user).first()
+    if existing_application:
+        return redirect('opportunity_detail', pk=pk)
+
+    if request.method == "POST":
+        resume = request.FILES.get('resume')
+        cover_letter = request.POST.get('cover_letter')
+
+        OpportunityApplication.objects.create(
+            opportunity=opportunity,
+            student=request.user,
+            resume=resume,
+            cover_letter=cover_letter,
+        )
+        return redirect('opportunity_detail', pk=pk)
+
+    return render(request, 'student/applyform.html', {'opportunity': opportunity})
