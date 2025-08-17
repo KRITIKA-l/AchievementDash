@@ -41,6 +41,7 @@ urlpatterns = [
     path('<int:pk>/', views.opportunity_detail, name='opportunity_detail'),
     path('opportunity/<int:pk>/apply/', views.apply_for_opportunity, name='apply_for_opportunity'),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OPPORTUNITY LIST</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .badge-purple 
+        {
+            background-color: #c1b6ed !important;
+            color: #463781 !important;
+        }
+        
+        .badge-purple:hover 
+        {
+            background-color: #4b2fb3 !important;
+            color: rgb(248, 246, 246) !important;
+        }
+    </style>
 </head>
 <body>
     {% include 'student/navbar.html' %}
@@ -19,7 +32,7 @@
                 <p><strong>End Date:</strong> {{ opportunity.end_date }}</p>
                 <p><strong>Skills Required:</strong> 
                     {% for skill in opportunity.skills_required.all %}
-                        <span class="badge bg-info text-dark">{{ skill.name }}</span>
+                        <span class="badge badge-purple">{{ skill.name }}</span>
                     {% empty %}
                         No specific skills mentioned
                     {% endfor %}
@@ -29,12 +42,18 @@
                         ✅ You have already applied for this opportunity.
                     </div>
                 {% else %}
-                    <a href="{% url 'apply_for_opportunity' opportunity.pk %}" class="btn btn-success">Apply Now</a>
+                    <a href="{% url 'apply_for_opportunity' opportunity.pk %}" class="btn text-white" 
+                        style="background-color: darkslateblue; transition: background-color 0.3s;"
+                        onmouseover="this.style.backgroundColor='#5D3FD3'"
+                        onmouseout="this.style.backgroundColor='darkslateblue'">
+                        Apply Now
+                    </a>
                 {% endif %}
                 <a href="{% url 'opportunity_list' %}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>
+    
     {% include 'student/footer.html' %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>

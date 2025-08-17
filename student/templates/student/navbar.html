@@ -43,6 +43,7 @@
             font-family: Handjet;
             letter-spacing: 1px;
         }
+
         .sidebar 
         {
             width: 250px;
@@ -86,6 +87,7 @@
             color: #fff;
             transform: scale(1.05);
         }
+
         .sidebar.show 
         {
             transform: translateX(0%);
@@ -95,6 +97,7 @@
         {
             color: white !important;
         }
+
         .search-bar 
         {
             flex-grow: 1;
@@ -126,6 +129,7 @@
         }
     </style>
 </head>
+
 <body class="d-flex flex-column min-vh-100">
     <div class="navbar">
         <!-- LEFT PART -->
@@ -137,6 +141,7 @@
             </div>
             <div class="navbar-heading">Achievo</div>
         </div>
+
         <!-- side bar -->
         <div class="sidebar" id="sidebar">
             {% if user.is_authenticated %}
@@ -163,12 +168,14 @@
                     <a href="{% url 'loginuser' %}" class="btn btn-outline-light w-100 text-start">Login</a> 
             {% endif %}
         </div>
+
         <!-- search section -->
         <form class="search-bar" role="search" method="post" action="{% url 'search' %}">
             {% csrf_token %}
             <input type="text" placeholder="Search" name="prod_search">
             <button type="submit" class="btn btn-outline-light"><i class="bi bi-search"></i></button>
         </form>
+        
         <!-- right part -->
         <div class="right-icons">
             <div class="icon">

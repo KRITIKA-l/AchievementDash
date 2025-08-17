@@ -18,6 +18,7 @@
             z-index: -1;
             object-fit: cover;
         }
+
         .form-container 
         {
             background: rgba(255, 255, 255, 0.15);
@@ -29,16 +30,19 @@
             max-width: 500px;
             margin: auto;
         }
+
         .helptext-scroll 
         {
             max-height: 60px;
             overflow-y: auto;
             font-size: 0.85rem;
         }
+
         label 
         {
             font-weight: bold;
         }
+
         .btn-primary 
         {
             background: linear-gradient(to right, #4facfe, #00f2fe);
@@ -78,8 +82,9 @@
     <!-- form section -->
     <div class="container mt-5 mb-5">
         <div class="form-container text-white">
+
             {% if error %}
-            <h3 class="alert alert-primary">{{ error }}</h3>
+            <h3 class="alert alert-primary text-center">{{ error }}</h3>
             {% endif %}
             <h3 class="text-center mb-3">SIGN UP</h3>
 
@@ -87,13 +92,14 @@
                 {% csrf_token %}
 
                 <!-- Username -->
-                 <label for="dob">Username:</label>
+                <label for="dob">Username:</label>
                 <input placeholder="Enter Username" class="form-control mb-2" type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required>
 
-
+                <!-- DOB -->
                 <label for="dob">Date of Birth:</label>
                 <input type="date" name="date_of_birth" id="dob" class="form-control mb-3">
 
+                <!-- Location -->
                 <label for="location">Location:</label>
                 <input type="text" name="location" id="location" placeholder="Your city" class="form-control mb-3">
 
@@ -129,8 +135,10 @@
                 <label for="personal_website">Website:</label>
                 <input type="url" name="personal_website" id="personal_website" placeholder="https://yourwebsite.com" class="form-control mb-3">
 
+                <!-- Bio -->
                 <label for="bio">Bio:</label>
                 <textarea name="bio" id="bio" class="form-control mb-3" rows="3" placeholder="Tell us about yourself"></textarea>
+                
                 <!-- Submit Button -->
                 <button type="submit" class="btn btn-primary w-100 mb-2 mt-2">Sign Up</button>
 

@@ -11,7 +11,10 @@
     {% include 'student/navbar.html' %}
 
     <div class="container mt-4">
-        <h2>Edit Profile</h2>
+        <div class="alert alert-secondary text-center">
+            <h2>Edit Profile</h2>
+        </div>
+    
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
@@ -69,13 +72,19 @@
                 {% endif %}
             </div>
 
+            <!-- Private/Public -->
             <select id="is_public" name="is_public" class="form-select">
                 <option value="True" {% if profile.is_public %}selected{% endif %}>Public</option>
                 <option value="False" {% if not profile.is_public %}selected{% endif %}>Private</option>
             </select>
 
             <!-- Buttons -->
-            <button type="submit" class="btn btn-success mt-2">Save Changes</button>
+            <button type="submit" class="btn text-white mt-2" 
+                style="background-color: darkslateblue; transition: background-color 0.3s;"
+                onmouseover="this.style.backgroundColor='#5D3FD3'"
+                onmouseout="this.style.backgroundColor='darkslateblue'">
+                Save Changes
+            </button>
             <a href="{% url 'my_profile' %}" class="btn btn-secondary mt-2">Cancel</a>
         </form>
     </div>

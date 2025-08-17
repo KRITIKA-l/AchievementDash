@@ -8,28 +8,71 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
     <style>
-        .card {
+
+        .Add-header 
+        {
+            background: #d6cdf3;  
+            color: #5D3FD3;      
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .card 
+        {
             border-radius: 15px;
             margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .skills-list li {
-            background: #e9ecef;
+
+        .card:hover 
+        {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Profile image */
+        .profile-img 
+        {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        /* Skills badges */
+        .skills-list li 
+        {
+            background: #e9e5ff;
             display: inline-block;
-            margin: 3px;
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 14px;
+            margin: 4px;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            transition: background 0.2s, transform 0.2s;
         }
+
+        .skills-list li:hover 
+        {
+            background: #5D3FD3;
+            color: white;
+            transform: scale(1.05);
+        }
+
     </style>
 </head>
+
 <body>
     {% include 'student/navbar.html' %}
 
-    <div class="container py-5">
-        <h2 class="mb-4">Search Results for "{{ query }}"</h2>
+    <div class="container py-2">
 
         <!-- User Profiles -->
-        <h4>User Profiles</h4>
+        <h4 class="Add-header">User Profiles</h4>
         <div class="row">
             {% if profiles %}
                 {% for profile in profiles %}
@@ -37,13 +80,13 @@
                         <div class="card p-3 text-center">
                             <div class="d-flex justify-content-center">
                                 {% if profile.profile_image %}
-                                    <img src="{{ profile.profile_image.url }}" class="rounded-circle mb-3" width="100" height="100">
+                                    <img src="{{ profile.profile_image.url }}" class="profile-img">
                                 {% else %}
-                                    <img src="{% static 'student/img2.jpg' %}" class="rounded-circle mb-3" width="100" height="100">
+                                    <img src="{% static 'student/img2.jpg' %}" class="profile-img">
                                 {% endif %}
                             </div>
                             <h5>{{ profile.user.username }}</h5>
-                            <p>{{ profile.location|default:"Location not specified" }}</p>
+                            <p class="text-muted">{{ profile.location|default:"Location not specified" }}</p>
                             {% if profile.skills.all %}
                                 <ul class="skills-list list-unstyled">
                                     {% for skill in profile.skills.all %}
@@ -51,7 +94,12 @@
                                     {% endfor %}
                                 </ul>
                             {% endif %}
-                            <a href="{% url 'profile_view' profile.user.username %}" class="btn btn-sm btn-primary mt-2">View Profile</a>
+                            <a href="{% url 'profile_view' profile.user.username %}" class="btn text-white" 
+                                style="background-color: darkslateblue; transition: background-color 0.3s;"
+                                onmouseover="this.style.backgroundColor='#5D3FD3'"
+                                onmouseout="this.style.backgroundColor='darkslateblue'">
+                                View Profile
+                            </a>
                         </div>
                     </div>
                 {% endfor %}
@@ -61,7 +109,7 @@
         </div>
 
         <!-- Opportunities -->
-        <h4 class="mt-5">Opportunities</h4>
+        <h4 class="Add-header">Opportunities</h4>
         <div class="row">
             {% if opportunities %}
                 {% for opp in opportunities %}
@@ -77,7 +125,12 @@
                                     {% endfor %}
                                 </ul>
                             {% endif %}
-                            <a href="{% url 'opportunity_detail' opp.id %}" class="btn btn-sm btn-primary mt-2">View Opportunity</a>
+                            <a href="{% url 'opportunity_detail' opp.id %}" class="btn text-white" 
+                                style="background-color: darkslateblue; transition: background-color 0.3s;"
+                                onmouseover="this.style.backgroundColor='#5D3FD3'"
+                                onmouseout="this.style.backgroundColor='darkslateblue'">
+                                View Opportunity
+                            </a>
                         </div>
                     </div>
                 {% endfor %}

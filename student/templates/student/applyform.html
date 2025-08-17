@@ -18,11 +18,18 @@
                     <label class="form-label">Resume</label>
                     <input type="file" name="resume" class="form-control">
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Cover Letter</label>
                     <textarea name="cover_letter" class="form-control" rows="5"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit Application</button>
+                
+                <button type="submit" class="btn text-white" 
+                    style="background-color: darkslateblue; transition: background-color 0.3s;"
+                    onmouseover="this.style.backgroundColor='#5D3FD3'"
+                    onmouseout="this.style.backgroundColor='darkslateblue'">
+                    Submit Application
+                </button>
                 <a href="{% url 'opportunity_detail' opportunity.pk %}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>

@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.utils import timezone
 
 # Create your views here.
+
 def home(request):
     return render(request,'student/home.html')
 
@@ -25,14 +26,13 @@ def dashboard(request):
 
 @login_required
 def addachievement(request):
-    skills = Skill.objects.all()  # fetch all existing skills
+    skills = Skill.objects.all()  
 
     if request.method == "POST":
         skill_id = request.POST.get('skill_id')
         other_skill_name = request.POST.get('other_skill', '').strip()
 
         if skill_id == "other" and other_skill_name:
-            # Create new skill if not exists
             skill, created = Skill.objects.get_or_create(name=other_skill_name)
             request.user.userprofile.skills.add(skill)
             messages.success(request, f"New skill '{skill.name}' added successfully!")
@@ -43,9 +43,7 @@ def addachievement(request):
         else:
             messages.error(request, "Please select a skill or enter a new one.")
 
-        # Instead of redirecting, render the same page
         return render(request, 'student/addachievement.html', {'skills': skills})
-
     return render(request, 'student/addachievement.html', {'skills': skills})
 
 def loginuser(request):
@@ -60,7 +58,6 @@ def loginuser(request):
         else:
             login(request,user)
             return (redirect('home'))
-
 
 def signupuser(request):
     if request.method=='GET':
@@ -90,11 +87,12 @@ def logoutuser(request):
         logout(request)
         return(redirect('home'))
     
+
 @login_required
 def my_profile(request):
     user_obj = request.user
     profile = user_obj.userprofile
-    is_owner = True  # because it's always the logged-in user
+    is_owner = True 
 
     context = {
         'profile_user': user_obj,
@@ -112,7 +110,7 @@ def profile_view(request, username=None):
 
     profile = user_obj.userprofile  
     is_owner = (request.user == user_obj)
-    # Render the SAME template, it handles private vs public
+    
     context = {
         'profile_user': user_obj,
         'profile': profile,
@@ -124,7 +122,6 @@ def profile_view(request, username=None):
 def edit_profile(request):
     profile = request.user.userprofile
     if request.method == "POST":
-        # Fetch values
         bio = request.POST.get('bio', '').strip()
         location = request.POST.get('location', '').strip()
         dob = request.POST.get('date_of_birth', '').strip()
@@ -132,12 +129,12 @@ def edit_profile(request):
         github = request.POST.get('github_url', '').strip()
         website = request.POST.get('personal_website', '').strip()
         profile.is_public = request.POST.get('is_public') == 'True'
-        # Update only if a value is provided
+
         if bio:
             profile.bio = bio
         if location:
             profile.location = location
-        if dob:  # Validate empty string
+        if dob:  
             profile.date_of_birth = dob
         if linkedin:
             profile.linkedin_url = linkedin
@@ -146,7 +143,6 @@ def edit_profile(request):
         if website:
             profile.personal_website = website
 
-        # Profile image
         if 'profile_image' in request.FILES:
             profile.profile_image = request.FILES['profile_image']
 
@@ -191,7 +187,6 @@ def opportunity_detail(request, pk):
 def apply_for_opportunity(request, pk):
     opportunity = get_object_or_404(Opportunity, pk=pk)
 
-    # prevent duplicate application
     existing_application = OpportunityApplication.objects.filter(opportunity=opportunity, student=request.user).first()
     if existing_application:
         return redirect('opportunity_detail', pk=pk)
@@ -217,14 +212,12 @@ def search(request):
     opportunities = []
 
     if query:
-        # Search in user profiles (username, location, skills)
         profiles = UserProfile.objects.filter(
             Q(user__username__icontains=query) |
             Q(location__icontains=query) |
             Q(skills__name__icontains=query)
         ).distinct()
 
-        # Search in opportunities (title, description, location, skills_required)
         opportunities = Opportunity.objects.filter(
             Q(title__icontains=query) |
             Q(description__icontains=query) |

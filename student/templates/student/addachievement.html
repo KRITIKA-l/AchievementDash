@@ -6,12 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Skill / Achievement</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .Add-header 
+        {
+            background: #d6cdf3;  
+            color: #5D3FD3;      
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        /* Card styling */
+        .form-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-card:hover 
+        {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
     {% include 'student/navbar.html' %}
 
-    <div class="container py-5">
-        <h2 class="mb-4 text-center">Add Skill / Achievement</h2>
+    <div class="container py-2">
+        <!-- Page Heading -->
+        <div class="Add-header">
+            <h2>Add Skills</h2>
+        </div>
 
         {% if messages %}
             <div class="mb-3" id="alert-box">
@@ -21,42 +53,55 @@
             </div>
         {% endif %}
 
-        <form method="POST">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="skill_id" class="form-label">Select Skill</label>
-                <select name="skill_id" id="skill_id" class="form-select" onchange="checkOther(this)">
-                    <option value="">-- Choose a skill --</option>
-                    {% for skill in skills %}
-                        <option value="{{ skill.id }}">{{ skill.name }}</option>
-                    {% endfor %}
-                    <option value="other">Other</option>
-                </select>
-            </div>
+        <!-- Form Card -->
+        <div class="form-card">
+            <form method="POST">
+                {% csrf_token %}
+                <!-- Skill Dropdown -->
+                <div class="mb-3">
+                    <label for="skill_id" class="form-label">Select Skill</label>
+                    <select name="skill_id" id="skill_id" class="form-select" onchange="checkOther(this)">
+                        <option value="">-- Choose a skill --</option>
+                        {% for skill in skills %}
+                            <option value="{{ skill.id }}">{{ skill.name }}</option>
+                        {% endfor %}
+                        <option value="other">Other</option>
+                    </select>
+                </div>
 
-            <div class="mb-3" id="otherSkillDiv" style="display:none;">
-                <label for="other_skill" class="form-label">Enter New Skill</label>
-                <input type="text" name="other_skill" id="other_skill" class="form-control" placeholder="Type new skill">
-            </div>
+                <!-- Other Skill Input -->
+                <div class="mb-3" id="otherSkillDiv" style="display:none;">
+                    <label for="other_skill" class="form-label">Enter New Skill</label>
+                    <input type="text" name="other_skill" id="other_skill" class="form-control" placeholder="Type new skill">
+                </div>
 
-            <button type="submit" class="btn btn-primary">Add</button>
-            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back</a>
-        </form>
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn text-white" 
+                        style="background-color: darkslateblue; transition: background-color 0.3s;"
+                        onmouseover="this.style.backgroundColor='#5D3FD3'"
+                        onmouseout="this.style.backgroundColor='darkslateblue'">
+                        Add
+                    </button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
 
+    <!-- Other Skill & auto-hide messages -->
     <script>
-        function checkOther(select) {
+        function checkOther(select) 
+        {
             const otherDiv = document.getElementById('otherSkillDiv');
-            if(select.value === 'other') {
-                otherDiv.style.display = 'block';
-            } else {
-                otherDiv.style.display = 'none';
-            }
+            otherDiv.style.display = (select.value === 'other') ? 'block' : 'none';
         }
-        setTimeout(() => {
+
+        setTimeout(() => 
+        {
             const alertBox = document.getElementById('alert-box');
             if (alertBox) alertBox.style.display = 'none';
-        }, 3000); // 3000ms = 3 seconds
+        }, 3000); // hide alert after 3s
     </script>
 
     {% include 'student/footer.html' %}

@@ -9,37 +9,45 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <style>
-        body {
+        body 
+        {
             background: linear-gradient(to right, #ece9e6, #ffffff);
         }
-        .profile-card {
+        .profile-card 
+        {
             border-radius: 20px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             background: #fff;
             padding: 30px;
         }
-        .profile-card:hover {
+        .profile-card:hover 
+        {
             transform: translateY(-5px);
             box-shadow: 0 12px 25px rgba(0,0,0,0.15);
         }
-        .profile-card h3 {
+        .profile-card h3 
+        {
             font-weight: 700;
         }
-        .profile-card .profile-image {
+        .profile-card .profile-image 
+        {
             border: 4px solid #f1f1f1;
         }
-        .btn-link-custom {
+        .btn-link-custom 
+        {
             display: inline-flex;
             align-items: center;
             gap: 5px;
             margin: 3px;
         }
-        .locked {
+        .locked 
+        {
             opacity: 0.6;
             pointer-events: none;
         }
     </style>
 </head>
+
 <body>
     {% include 'student/navbar.html' %}
 
@@ -110,10 +118,15 @@
 
                 <br>
                 {% if request.user == profile_user %}
-                    <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-3">Edit Profile</a>
+                    <a href="{% url 'edit_profile' %}" class="btn text-white mt-2" 
+                        style="background-color: darkslateblue; transition: background-color 0.3s;"
+                        onmouseover="this.style.backgroundColor='#5D3FD3'"
+                        onmouseout="this.style.backgroundColor='darkslateblue'">
+                        Edit Profile
+                    </a>
                 {% endif %}
-
             {% else %}
+
                 <!-- Private Profile Mode -->
                 <div class="locked mt-3">
                     <p class="text-danger">
@@ -125,6 +138,7 @@
     </div>
 
     {% include 'student/footer.html' %}
+    
     <script>
         setTimeout(() => {
             const alertBox = document.getElementById('alert-box');
