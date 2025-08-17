@@ -9,28 +9,56 @@
 <body>
     {% include 'student/navbar.html' %}
     <div class="container py-5">
-        <h2 class="mb-4 text-center">Available Opportunities</h2>
+        <h2 class="mb-4 text-center">Opportunities</h2>
 
-        <div class="row">
-            {% for opportunity in opportunities %}
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ opportunity.title }}</h5>
-                        <p class="card-text text-muted">
-                            {{ opportunity.description|truncatewords:20 }}
-                        </p>
-                        <p><strong>Location:</strong> {{ opportunity.location }}</p>
-                        <p><strong>Dates:</strong> {{ opportunity.start_date }} - {{ opportunity.end_date }}</p>
-
-                        <a href="{% url 'opportunity_detail' opportunity.pk %}" class="btn btn-primary w-100">
-                            Apply
-                        </a>
-                    </div>
+        <!-- Ongoing Opportunities -->
+        <h4>Ongoing</h4>
+        <div class="row g-3 mb-4">
+            {% for opp in ongoing %}
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5>{{ opp.title }}</h5>
+                    <p>{{ opp.location }}</p>
+                    <p>Ends on: {{ opp.end_date }}</p>
+                    <a href="{% url 'opportunity_detail' opp.id %}" class="btn btn-sm btn-primary">View</a>
                 </div>
             </div>
             {% empty %}
-            <p class="text-center">No opportunities available at the moment.</p>
+                <p class="text-muted">No ongoing opportunities.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Upcoming Opportunities -->
+        <h4>Upcoming</h4>
+        <div class="row g-3 mb-4">
+            {% for opp in upcoming %}
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5>{{ opp.title }}</h5>
+                    <p>{{ opp.location }}</p>
+                    <p>Starts on: {{ opp.start_date }}</p>
+                    <a href="{% url 'opportunity_detail' opp.id %}" class="btn btn-sm btn-primary">View</a>
+                </div>
+            </div>
+            {% empty %}
+                <p class="text-muted">No upcoming opportunities.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Closed Opportunities -->
+        <h4>Closed</h4>
+        <div class="row g-3">
+            {% for opp in closed %}
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5>{{ opp.title }}</h5>
+                    <p>{{ opp.location }}</p>
+                    <p>Ended on: {{ opp.end_date }}</p>
+                    <a href="{% url 'opportunity_detail' opp.id %}" class="btn btn-sm btn-secondary disabled">Closed</a>
+                </div>
+            </div>
+            {% empty %}
+                <p class="text-muted">No closed opportunities.</p>
             {% endfor %}
         </div>
     </div>

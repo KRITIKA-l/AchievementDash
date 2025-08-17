@@ -23,15 +23,19 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
+    path('search/', views.search, name='search'),
+    
     path('dashboard',views.dashboard,name='dashboard'),
     path('addachievement',views.addachievement,name='addachievement'),
-    path('profile',views.profile,name='profile'),
+
     path('loginuser/',views.loginuser,name='loginuser'),
     path('signupuser/',views.signupuser,name='signupuser'),
     path('logoutuser/',views.logoutuser,name='logoutuser'),
+    
     path('profile/', views.my_profile, name='my_profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('profile/<str:username>/', views.profile_view, name='profile_view'),
+    
 
     path("opportunities/", views.opportunity_list, name="opportunity_list"),
     path('<int:pk>/', views.opportunity_detail, name='opportunity_detail'),
@@ -40,3 +44,4 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

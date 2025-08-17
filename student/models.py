@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+# Skill model
+class Skill(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -15,17 +21,11 @@ class UserProfile(models.Model):
     personal_website = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True)
+    skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
     
-# Skill model
-class Skill(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.name
-
 # Opportunity model
 class Opportunity(models.Model):
     title = models.CharField(max_length=200)

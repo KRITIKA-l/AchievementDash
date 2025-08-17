@@ -1,8 +1,11 @@
 from django.contrib import admin
 from .models import UserProfile,Opportunity,Skill,OpportunityApplication
 # Register your models here.
-admin.site.register(UserProfile)
-
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user',)
+    list_filter = ('skills',)
+    
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name',)

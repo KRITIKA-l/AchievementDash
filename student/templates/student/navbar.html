@@ -146,13 +146,13 @@
                         <li><a href="{% url 'home' %}" class="text-white text-decoration-none" id="home">Home</a></li>
                     </ul>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'dashboard' %}" class="text-white text-decoration-none" id="home">Dashboard</a></li>
+                        <li><a href="{% url 'dashboard' %}" class="text-white text-decoration-none" id="dashboard">Dashboard</a></li>
                     </ul>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'opportunity_list' %}" class="text-white text-decoration-none" id="home">Opportunities</a></li>
+                        <li><a href="{% url 'opportunity_list' %}" class="text-white text-decoration-none" id="opportunities">Opportunities</a></li>
                     </ul>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'profile' %}" class="text-white text-decoration-none" id="home">Profile</a></li>
+                        <li><a href="{% url 'my_profile' %}" class="text-white text-decoration-none" id="profile">Profile</a></li>
                     </ul>
                 </div>
 
@@ -164,7 +164,7 @@
             {% endif %}
         </div>
         <!-- search section -->
-        <form class="search-bar" role="search" method="post" action="">
+        <form class="search-bar" role="search" method="post" action="{% url 'search' %}">
             {% csrf_token %}
             <input type="text" placeholder="Search" name="prod_search">
             <button type="submit" class="btn btn-outline-light"><i class="bi bi-search"></i></button>
@@ -172,7 +172,7 @@
         <!-- right part -->
         <div class="right-icons">
             <div class="icon">
-                <a class="btn text-white" id="infobtn" href="{% url 'profile' %}">
+                <a class="btn text-white" id="infobtn" href="{% url 'my_profile' %}">
                     <i class="bi bi-person-circle fs-5"></i>
                 </a>
             </div>
